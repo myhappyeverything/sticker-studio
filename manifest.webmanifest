@@ -1,7 +1,7 @@
 {
   "name": "Sticker Studio",
   "short_name": "Sticker",
-  "start_url": "./Sticker Studio.dc.html",
+  "start_url": "./",
   "display": "standalone",
   "background_color": "#F7F4EF",
   "theme_color": "#F7F4EF",
@@ -18,5 +18,6 @@
       "type": "image/png",
       "purpose": "any maskable"
     }
-  ]
+  ],
+  "scope": "./"
 }

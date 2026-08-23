@@ -22,6 +22,10 @@ The app lands at `https://<you>.github.io/sticker-studio/`.
 
 Open that URL in Safari > Share > Add to Home Screen. Full screen, and it works offline after the first load.
 
+## Note
+
+The app is served from the repo root (`index.html`) **and** from `/docs`, so either GitHub Pages folder setting works.
+
 ## Files
 
 - `docs/index.html` — the app
