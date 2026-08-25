@@ -183,7 +183,8 @@ function drawLS(ctx, text, cx, y, sp) {
 function layout(ctx, o) {
   const S = o.size;
   const f = FONTS.find(x => x.id === o.font) || FONTS[0];
-  const setF = (mul, weight) => { ctx.font = (weight || f.weight) + ' ' + (S * mul) + 'px ' + f.stack; };
+  const fontOn = c => (mul, weight) => { c.font = (weight || f.weight) + ' ' + (S * mul) + 'px ' + f.stack; };
+  const setF = fontOn(ctx);
   const T = (o.text || 'Sigiriya').toUpperCase();
   const U = (o.sub || '').toUpperCase();
 
@@ -191,7 +192,7 @@ function layout(ctx, o) {
     const sp = S * 0.34;
     setF(1);
     const w = ls(ctx, T, sp);
-    return { w, h: S * 1.1, draw: (c, cx, cy) => { setF(1); c.fillStyle = o.color; c.textBaseline = 'middle'; drawLS(c, T, cx, cy, sp); } };
+    return { w, h: S * 1.1, draw: (c, cx, cy) => { const setF = fontOn(c); setF(1); c.fillStyle = o.color; c.textBaseline = 'middle'; drawLS(c, T, cx, cy, sp); } };
   }
 
   if (o.layout === 'rule') {
@@ -202,6 +203,7 @@ function layout(ctx, o) {
     return {
       w: tw + 2 * (gap + lineLen), h: S * 1.2,
       draw: (c, cx, cy) => {
+        const setF = fontOn(c);
         setF(1); c.fillStyle = o.color; c.textBaseline = 'middle';
         drawLS(c, T, cx, cy, sp);
         c.strokeStyle = o.color; c.lineWidth = lw; c.lineCap = 'butt';
@@ -222,6 +224,7 @@ function layout(ctx, o) {
     return {
       w: Math.max(tw, sw), h,
       draw: (c, cx, cy) => {
+        const setF = fontOn(c);
         const top = cy - h / 2;
         setF(1, 600); c.fillStyle = o.color; c.textBaseline = 'middle';
         drawLS(c, T, cx, top + S * 0.5, sp);
@@ -238,6 +241,7 @@ function layout(ctx, o) {
     return {
       w: cw, h: chars.length * lh,
       draw: (c, cx, cy) => {
+        const setF = fontOn(c);
         setF(1); c.fillStyle = o.color; c.textBaseline = 'middle'; c.textAlign = 'center';
         const top = cy - (chars.length * lh) / 2;
         chars.forEach((ch, i) => c.fillText(ch, cx, top + lh * (i + 0.5)));
@@ -257,6 +261,7 @@ function layout(ctx, o) {
   return {
     w: W, h: H,
     draw: (c, cx, cy) => {
+      const setF = fontOn(c);
       const x = cx - W / 2, y = cy - H / 2;
       c.strokeStyle = o.color; c.fillStyle = o.color; c.lineWidth = bw; c.textBaseline = 'middle';
       c.strokeRect(x + bw / 2, y + bw / 2, W - bw, H - bw);
